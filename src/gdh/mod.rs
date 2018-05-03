@@ -113,13 +113,11 @@ pub fn dealer(
     // Share decryption
     let mut i = 0;
     let mut valid_shares: Vec<Element> = vec![];
-    let mut valid_private_keys: Vec<PrivateKey> = vec![];
-    for mut private_key in private_keys {
+    for private_key in private_keys.iter() {
         let share = private_key.decrypt_share(&pairing, &encrypted_share);
         if public_key.verify_share(&pairing, &g2, i.clone(), &share, &encrypted_share) {
             // Share verified successfully
             valid_shares.push(share);
-            valid_private_keys.push(private_key);
         } else {
             // Invalid share
             println!("Invalid share!");
@@ -155,5 +153,5 @@ pub fn dealer(
 
     assert!(lhs.cmp(&rhs) == 0);
 
-    (public_key, valid_private_keys)
+    (public_key, private_keys)
 }

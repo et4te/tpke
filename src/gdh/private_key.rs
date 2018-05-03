@@ -10,13 +10,13 @@ pub struct PrivateKey {
 }
 
 impl PrivateKey {
-    pub fn decrypt_share(&mut self, pairing: &Pairing, uvw: &EncryptedShare) -> Element {
+    pub fn decrypt_share(&self, pairing: &Pairing, uvw: &EncryptedShare) -> Element {
         let mut pp = ElementPP::new();
 
         // u_i = u ^ self.sk
         let mut u_i = Element::new(Group::G1, pairing);
         pp.init(&uvw.u);
-        pp.pow_zn(&mut u_i, &mut self.sk);
+        pp.pow_zn(&mut u_i, &self.sk);
         u_i
     }
 }

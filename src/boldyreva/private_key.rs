@@ -10,13 +10,13 @@ pub struct PrivateKey {
 }
 
 impl PrivateKey {
-    pub fn sign(&mut self, pairing: &Pairing, h: &Element) -> Signature {
+    pub fn sign(&self, pairing: &Pairing, h: &Element) -> Signature {
         let mut pp = ElementPP::new();
 
         // r = h ^ self.sk
         let mut r = Element::new(Group::G1, pairing);
         pp.init(&h);
-        pp.pow_zn(&mut r, &mut self.sk);
+        pp.pow_zn(&mut r, &self.sk);
         r
     }
 }
